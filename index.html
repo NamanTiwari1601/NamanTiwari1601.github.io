@@ -1,41 +1,406 @@
-<!-- TODO 1: Create the HTML Boilerplate -->
-
-<!-- TODO 2: Add Your previous projects' HTML into the public folder -->
-
-<!-- TODO 3: Take screenshots of your project previews and add the images to the images folder -->
-
-<!-- TODO 4: Add titles/subtitles etc. -->
-
-<!-- TODO 5: Add a link to the project pages -->
-
-<!-- TODO 6: Add images to show the project previews
-HINT for TODO 6: You can use the height attribute set to 200 to make the image smaller:
-https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-height -->
-
-<!-- TODO 7: Add the Contact Me and About Me page links -->
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Naman Tiwari — Backend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEF1E9;
+    --paper-alt: #E4E8DC;
+    --ink: #1B2A22;
+    --ink-soft: #46564C;
+    --line: #B7C2AC;
+    --line-strong: #8E9C82;
+    --red: #A8402F;
+    --focus: #2E5C43;
+    font-size: 16px;
+  }
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-        <title>Portfolio</title>
-        <!-- <meta name="description" content=""> -->
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-        <!-- <link rel="stylesheet" href=""> -->
-    </head>
-    <body>
-        <h1>Naman Tiwari's Portfolio</h1>
-        <h2>I am a Web Developer</h2>
-        <hr>
-        <h2><a href="./public/birthday-invite.html"> Birthday-invite page</a></h2>
-        <img src="./assets/images/birthday-invite.png" height="200" alt="birthday-invite">
-        <h2><a href="./public/movie-ranking.html">Movie-Ranking page</a></h2>
-        <img src="./assets/images/movie-ranking.png" height="200" alt="Movie-Ranking">
-        <hr>
-        <a href="./public/about.html">About me</a>
-        <a href="./public/contact.html">Contact Me</a>
-        
-        <!-- <script src="" async defer></script> -->
-    </body>
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #12160F;
+      --paper-alt: #191F15;
+      --ink: #E9EDE3;
+      --ink-soft: #A9B39C;
+      --line: #3A4432;
+      --line-strong: #56613F;
+      --red: #E0846F;
+      --focus: #7FBE9A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #12160F;
+    --paper-alt: #191F15;
+    --ink: #E9EDE3;
+    --ink-soft: #A9B39C;
+    --line: #3A4432;
+    --line-strong: #56613F;
+    --red: #E0846F;
+    --focus: #7FBE9A;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--focus); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .sheet {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ---------- Header: invoice-style masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 6px;
+    opacity: 0;
+    animation: rise 0.6s ease-out forwards;
+  }
+
+  .masthead-left .doc-label {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.02;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .role {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 10px 0 0;
+    max-width: 30ch;
+  }
+
+  .masthead-right {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    padding-top: 6px;
+  }
+  .masthead-right .no { color: var(--ink); font-weight: 600; }
+
+  .stamp {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 5px 12px;
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    transform: rotate(-3deg);
+    border-radius: 2px;
+    opacity: 0;
+    animation: stamp-in 0.35s ease-out 0.55s forwards;
+  }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes stamp-in { from { opacity: 0; transform: rotate(-3deg) scale(1.4); } to { opacity: 1; transform: rotate(-3deg) scale(1); } }
+
+  /* ---------- Section framing ---------- */
+  section { margin-top: 52px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 20px;
+    margin: 0;
+  }
+  .section-head .ref { font-size: 11.5px; color: var(--ink-soft); }
+
+  p.lede {
+    max-width: 62ch;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  /* ---------- Ledger table (skills) ---------- */
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 2.6em 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13.5px;
+  }
+  .ledger-row:last-child { border-bottom: none; }
+  .ledger-row .idx { color: var(--ink-soft); }
+  .ledger-row .tag {
+    font-size: 11px;
+    color: var(--ink-soft);
+    border: 1px solid var(--line-strong);
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Projects as line items ---------- */
+  .entry {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .entry:first-of-type { padding-top: 0; }
+  .entry:last-of-type { border-bottom: none; }
+
+  .entry-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .entry-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .entry-status {
+    font-size: 11px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .entry-status.live { color: var(--focus); }
+
+  .entry-desc {
+    margin: 8px 0 12px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+
+  .entry-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    align-items: center;
+    font-size: 11.5px;
+  }
+  .entry-meta .stack-item {
+    color: var(--ink-soft);
+    border-bottom: 1px dotted var(--line-strong);
+  }
+  .entry-meta .sep { color: var(--line-strong); }
+  .entry-link { margin-left: auto; font-size: 12px; font-weight: 500; }
+
+  /* ---------- Total ---------- */
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 16px;
+    margin-top: 8px;
+    border-top: 2px solid var(--ink);
+    font-size: 13.5px;
+  }
+  .total-row .amount {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact-list { list-style: none; padding: 0; margin: 0; }
+  .contact-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--line);
+    font-size: 13.5px;
+  }
+  .contact-list li:last-child { border-bottom: none; }
+  .contact-list .k { color: var(--ink-soft); }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 560px) {
+    .masthead { flex-direction: column; }
+    .masthead-right { text-align: left; }
+    .entry-link { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="masthead-left">
+      <p class="doc-label">Statement of Work — Backend Engineering</p>
+      <h1>Naman Tiwari</h1>
+      <p class="role">Java &amp; Spring Boot developer building systems that stay correct under pressure — transactions, validation, and the parts most CRUD apps skip.</p>
+      <span class="stamp">Open to work</span>
+    </div>
+    <div class="masthead-right">
+      <div>No. <span class="no">2024–NT</span></div>
+      <div>Backend / Full Stack</div>
+      <div>~2 yrs experience</div>
+    </div>
+  </div>
+
+  <section id="skills">
+    <div class="section-head">
+      <h2>Schedule of skills</h2>
+      <span class="ref">Ref. stack</span>
+    </div>
+    <div class="ledger-row">
+      <span class="idx">01</span>
+      <span>Core backend — Java, Spring Boot, Spring Data JPA / Hibernate</span>
+      <span class="tag">daily use</span>
+    </div>
+    <div class="ledger-row">
+      <span class="idx">02</span>
+      <span>Data &amp; messaging — PostgreSQL, Apache Kafka</span>
+      <span class="tag">daily use</span>
+    </div>
+    <div class="ledger-row">
+      <span class="idx">03</span>
+      <span>Infra &amp; delivery — Docker, AWS, GitHub Actions CI/CD</span>
+      <span class="tag">daily use</span>
+    </div>
+    <div class="ledger-row">
+      <span class="idx">04</span>
+      <span>Frontend — React, Vite, Tailwind CSS</span>
+      <span class="tag">working knowledge</span>
+    </div>
+    <div class="ledger-row">
+      <span class="idx">05</span>
+      <span>Testing &amp; resilience — JUnit 5, Mockito, Testcontainers, Resilience4j</span>
+      <span class="tag">sharpening</span>
+    </div>
+    <div class="ledger-row">
+      <span class="idx">06</span>
+      <span>Fundamentals — Data structures &amp; algorithms, system design</span>
+      <span class="tag">sharpening</span>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <h2>Ledger of projects</h2>
+      <span class="ref">Ref. work</span>
+    </div>
+
+    <div class="entry">
+      <div class="entry-top">
+        <p class="entry-name">Billing and Inventory System</p>
+        <span class="entry-status live">● active</span>
+      </div>
+      <p class="entry-desc">A billing &amp; inventory backend built around correctness under concurrency — service-layer stock validation, server-side pricing, and transactional rollback so a failed step never leaves inventory or billing data inconsistent.</p>
+      <div class="entry-meta">
+        <span class="stack-item">Spring Boot</span><span class="sep">·</span>
+        <span class="stack-item">PostgreSQL</span><span class="sep">·</span>
+        <span class="stack-item">Docker</span><span class="sep">·</span>
+        <span class="stack-item">GitHub Actions</span>
+        <a class="entry-link" href="https://github.com/NamanTiwari1601/BIS" target="_blank" rel="noopener">View repo →</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-top">
+        <p class="entry-name">Todo Application</p>
+        <span class="entry-status">● complete</span>
+      </div>
+      <p class="entry-desc">A full-stack task manager built end to end and put through a full audit-and-correction pass — backend persistence paired with a clean, responsive interface.</p>
+      <div class="entry-meta">
+        <span class="stack-item">Spring Boot</span><span class="sep">·</span>
+        <span class="stack-item">PostgreSQL</span><span class="sep">·</span>
+        <span class="stack-item">React</span><span class="sep">·</span>
+        <span class="stack-item">Vite</span><span class="sep">·</span>
+        <span class="stack-item">Tailwind CSS</span>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-top">
+        <p class="entry-name">Student Management System</p>
+        <span class="entry-status">● in progress</span>
+      </div>
+      <p class="entry-desc">A relational data-modeling project working through one-to-many associations, junction entities, and DTO design that prevents infinite recursion in nested JSON responses.</p>
+      <div class="entry-meta">
+        <span class="stack-item">Spring Boot</span><span class="sep">·</span>
+        <span class="stack-item">JPA / Hibernate</span><span class="sep">·</span>
+        <span class="stack-item">PostgreSQL</span>
+      </div>
+    </div>
+
+    <div class="total-row">
+      <span>Total projects on record</span>
+      <span class="amount">03</span>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <h2>Remittance details</h2>
+      <span class="ref">Ref. contact</span>
+    </div>
+    <ul class="contact-list">
+      <li><span class="k">GitHub</span><a href="https://github.com/NamanTiwari1601" target="_blank" rel="noopener">github.com/NamanTiwari1601</a></li>
+      <li><span class="k">Email</span><span>add-your-email@example.com</span></li>
+      <li><span class="k">LinkedIn</span><span>add-your-linkedin-url</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>Prepared by Naman Tiwari</span>
+    <span>Statement current as of 2026</span>
+  </footer>
+
+</div>
+</body>
 </html>
